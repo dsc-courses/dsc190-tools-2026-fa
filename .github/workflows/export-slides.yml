@@ -1,0 +1,121 @@
+name: Export slides to PDF
+
+on:
+  push:
+    branches: [main]
+    paths: ["lectures/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detect changed slide decks
+        id: changed
+        run: |
+          # Export every deck on a manual run or on the repo's first commit;
+          # otherwise, only the decks changed by the latest commit.
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] \
+              || ! git rev-parse --verify -q HEAD~1 > /dev/null; then
+            dirs=$(ls -d lectures/*/ | sed 's:/$::')
+          else
+            dirs=$(git diff --name-only HEAD~1 HEAD -- 'lectures/' \
+              | grep -oP 'lectures/[^/]+' \
+              | sort -u)
+          fi
+          # Filter to only directories that contain a slides.md
+          changed=""
+          for dir in $dirs; do
+            if [ -f "$dir/slides.md" ]; then
+              changed="$changed $dir"
+            fi
+          done
+          changed=$(echo "$changed" | xargs)
+          echo "dirs=$changed" >> "$GITHUB_OUTPUT"
+          echo "Changed lecture dirs: $changed"
+
+      - name: Install presenterm and dependencies
+        if: steps.changed.outputs.dirs != ''
+        run: |
+          PRESENTERM_VERSION="0.16.1"
+          curl -fsSL "https://github.com/mfontanini/presenterm/releases/download/v${PRESENTERM_VERSION}/presenterm-${PRESENTERM_VERSION}-x86_64-unknown-linux-gnu.tar.gz" \
+            | tar xz -C /usr/local/bin --strip-components=1
+          pip install weasyprint
+
+      - name: Install custom highlighting themes
+        if: steps.changed.outputs.dirs != ''
+        run: |
+          mkdir -p ~/.config/presenterm/themes/highlighting
+          cp .presenterm/themes/highlighting/*.tmTheme ~/.config/presenterm/themes/highlighting/
+
+      - name: Export changed slides to PDF
+        if: steps.changed.outputs.dirs != ''
+        env:
+          LINES: "25"
+          COLUMNS: "80"
+          TERM: "xterm-256color"
+        run: |
+          mkdir -p _pdfs
+          for dir in ${{ steps.changed.outputs.dirs }}; do
+            name=$(basename "$dir")
+            echo "Exporting $dir/slides.md -> _pdfs/${name}.pdf"
+            script -qec "stty rows 25 cols 80 && presenterm -c .presenterm/config.yaml --export-pdf '$dir/slides.md' -o '_pdfs/${name}.pdf'" /dev/null
+          done
+
+      - name: Upload PDFs to B2
+        if: steps.changed.outputs.dirs != ''
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.B2_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.B2_APPLICATION_KEY }}
+        run: |
+          for pdf in _pdfs/*.pdf; do
+            name=$(basename "$pdf")
+            aws s3 cp "$pdf" \
+              "s3://dsc-courses/dsc190-tools-2026-fa/${name}" \
+              --endpoint-url "https://s3.us-west-000.backblazeb2.com"
+          done
+
+      - name: Rebuild lectures/README.md
+        run: |
+          cat > lectures/README.md << 'HEADER'
+          # Lecture Slides
+
+          | # | Lecture | Slides |
+          |---|---------|--------|
+          HEADER
+
+          for dir in lectures/*/; do
+            [ -f "$dir/slides.md" ] || continue
+            name=$(basename "$dir")
+            # Extract zero-padded number from directory name (e.g., 01-intro -> 01)
+            num=$(echo "$name" | grep -oP '^\d+')
+            # Extract lecture title from first H1 or setext heading
+            title=$(grep -m1 -E '^#\s|^====' "$dir/slides.md" | head -1)
+            if echo "$title" | grep -q '===='; then
+              # Setext style — title is the line before the ====
+              title=$(grep -B1 '====' "$dir/slides.md" | head -1)
+            else
+              title=$(echo "$title" | sed 's/^#\s*//')
+            fi
+            # Clean any markdown/html formatting from title
+            title=$(echo "$title" | sed 's/<[^>]*>//g; s/\*\*//g; s/\*//g')
+            title=${title:-$name}
+            url="https://dsc-courses.s3.us-west-000.backblazeb2.com/dsc190-tools-2026-fa/${name}.pdf"
+            echo "| ${num} | ${title} | [PDF](${url}) |" >> lectures/README.md
+          done
+
+      - name: Commit README.md
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add lectures/README.md
+          git diff --cached --quiet && echo "No changes to README.md" && exit 0
+          git commit -m "Update lectures/README.md with slide PDFs"
+          git push

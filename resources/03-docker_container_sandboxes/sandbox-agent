@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+# Launch a sandboxed agentic AI CLI in Docker.
+#
+# The host's current working directory is bind-mounted at /work inside the
+# container, and the container runs as the host user's UID/GID so files the
+# agent creates are owned correctly on the host. HOME inside the container is
+# a per-agent named Docker volume (dsc190-agent-sandbox-<agent>-home) so that
+# interactive login, config, and cache survive between runs — but it is kept
+# separate from the CWD so the agent's settings aren't shadowed by your repo.
+
+set -euo pipefail
+
+usage() {
+    cat <<EOF
+Usage: $(basename "$0") <claude|codex|opencode> [--pull] [-- agent-args...]
+
+Starts the chosen agent inside a Docker sandbox. The image is pulled from
+GitHub Container Registry on first use. The current working directory is
+mounted at /work.
+
+Auth: the first time you run an agent, use its built-in login flow (e.g.
+\`/login\` for claude, \`codex login\` for codex, opencode's auth menu).
+Credentials are stored in a per-agent Docker volume and reused on subsequent
+runs. If ANTHROPIC_API_KEY or OPENAI_API_KEY happen to be set in your shell,
+they are passed through as a convenience but are NOT required.
+
+Options:
+  --pull      Pull the latest image before starting (default: use cached).
+  -h, --help  Show this message.
+EOF
+}
+
+if [ $# -lt 1 ]; then
+    usage >&2
+    exit 1
+fi
+
+agent=""
+pull=0
+passthrough=()
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        -h|--help) usage; exit 0 ;;
+        --pull) pull=1; shift ;;
+        --) shift; passthrough+=("$@"); break ;;
+        claude|codex|opencode)
+            if [ -n "$agent" ]; then
+                echo "Agent already set to '$agent'; unexpected: $1" >&2
+                exit 1
+            fi
+            agent="$1"; shift ;;
+        *)
+            echo "Unknown argument: $1" >&2
+            usage >&2
+            exit 1 ;;
+    esac
+done
+
+if [ -z "$agent" ]; then
+    echo "Must specify an agent (claude, codex, or opencode)." >&2
+    exit 1
+fi
+
+image="ghcr.io/dsc-courses/dsc190-agent-sandbox:$agent"
+
+if [ "$pull" -eq 1 ] || ! docker image inspect "$image" >/dev/null 2>&1; then
+    echo "Pulling $image..."
+    docker pull "$image"
+fi
+
+env_args=()
+case "$agent" in
+    claude)
+        [ -n "${ANTHROPIC_API_KEY:-}" ] && env_args+=(-e "ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY")
+        ;;
+    codex)
+        [ -n "${OPENAI_API_KEY:-}" ] && env_args+=(-e "OPENAI_API_KEY=$OPENAI_API_KEY")
+        ;;
+esac
+
+home_volume="dsc190-agent-sandbox-$agent-home"
+
+exec docker run --rm -it --init \
+    --user "$(id -u):$(id -g)" \
+    -v "$home_volume:/home/agent" \
+    -v "$PWD:/work" \
+    -w /work \
+    ${env_args[@]+"${env_args[@]}"} \
+    "$image" ${passthrough[@]+"${passthrough[@]}"}
