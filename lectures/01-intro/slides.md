@@ -284,6 +284,14 @@ The Shell
     - Connect programs together to run complex workflows
     - etc.
 
+Note
+====
+
+- <span class="term">**Terminal**</span> and <span class="term">**shell**</span> are often (mis)used interchangeably, but they are **not** the same thing.
+- The shell is the program that *interprets* your commands.
+- The terminal is the program that *displays* the shell.
+- Browser : Website :: Terminal : Shell
+
 The Basics
 ==========
 
@@ -304,10 +312,14 @@ Demo
 - `less <file>`: view the contents of a file (`q` to quit)
 - Tip: use the tab key for autocompletion!
 
-Note
-====
+AI
+==
 
-- <span class="term">**Terminal**</span> and <span class="term">**shell**</span> are often used interchangeably, but they are **not** the same thing.
-- The shell is the program that *interprets* your commands.
-- The terminal is the program that *displays* the shell.
-- Browser : Website :: Terminal : Shell
+- We'll see in the next lecture that these tools are exactly what AI agents use.
+- The shell is the **common interface** that both you and the agent use.
+
+For next time...
+================
+
+- Make sure to follow the "Initial Setup" instructions linked in the welcome post on Campuswire.
+- No discussion tomorrow!
