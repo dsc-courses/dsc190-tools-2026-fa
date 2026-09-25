@@ -135,7 +135,7 @@ exam, it's set in stone!
 
 There will also be 8 weekly assignments. The format and structure of the
 assignments will naturally vary from week to week as we learn different tools,
-but they will always be due on Wednesday at 11:59 pm. You will turn them in on
+but they will always be due on Tuesday at 11:59 pm. You will turn them in on
 Gradescope (unless otherwise specified in the assignment instructions).
 
 The purpose of the assignments is twofold. First, they will often introduce and
