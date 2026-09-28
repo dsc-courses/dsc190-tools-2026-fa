@@ -38,6 +38,14 @@ you can add yourself using the links and codes below:
     - Link: https://campuswire.com/p/G3D159E83
     - Code: `4507`
 
+## Getting Started
+
+A large part of this class will be learning to work in a Linux environment. To set up
+the environment for this class, follow the instructions at
+[`resources/00-initial_setup/`](https://github.com/dsc-courses/dsc190-tools-2026-fa/tree/main/resources/00-initial_setup).
+We'll be using this environment for the assignments and the lecture demos --
+make sure to set it up so that you can follow along.
+
 ## Required Materials
 
 To get the most out of this course, you will need access to an AI coding agent,
