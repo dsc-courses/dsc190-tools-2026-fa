@@ -16,13 +16,13 @@ The Shell
 =========
 
 - Welcome back.
-- Open a terminal and run: `bash start-linux.sh`.
-
-Updating the Repo
-=================
-
-- We need to pull the latest version of the course repo.
-- Run:
+- Open a terminal on your computer and clone the course repo:
+    - `git clone https://github.com/dsc-courses/dsc190-tools-2026-fa.git`
+    - You will only need to do this once.
+- Then, start the Linux environment:
+    - `cd dsc190-tools-2026-fa`
+    - `bash start-linux.sh`
+- When inside the container, update its copy of the repo:
     - `cd dsc190-tools-2026-fa`
     - `git pull`
 
@@ -45,8 +45,59 @@ Use the keyboard shortcuts!
 
 Example: `mdkir foo bar baz`
 
-Again, With AI
-==============
+---
+
+<!-- new_lines: 4 -->
+<!-- alignment: center -->
+
+![image:w:70%](../COMMON/logo.png)
+
+**<span class="term">Agents</span>**
+
+---
+
+AI
+==
+
+- Since the release of ChatGPT in late 2022, it's been clear that AI will be a tool in our toolset.
+- But it's only been recently -- with the release of Claude Code in early 2025 -- that AI has become **the** tool.
+
+
+LLMs
+====
+
+- ChatGPT is an interface to a large language model (LLM).
+- LLMs are "next word predictors" that have been trained on huge amounts of text.
+    - When asked a question, they produce text that is "reasonable".
+    - This is why they "hallucinate".
+- By themselves, LLMs cannot interact with the outside world.
+
+
+Example
+=======
+
+- How many "r"'s are in the word "strawberry"?
+- "LLM's can't count"
+
+Agents
+======
+
+- An **agent** is an LLM that:
+    - has access to the outside world via **tools**,
+    - and can call those tools in a loop.
+- Example: an LLM that can run commands in the Unix shell, see the output, and react accordingly.
+- While not the first, *Claude Code* was to agents as ChatGPT was to LLMs.
+
+Ground Truth
+============
+
+- By making tool calls, agents can get "ground truth" about the world.
+- Example: number of "r"'s in "strawberry":
+    - An LLM makes a reasonable guess: "There are 2 'r's in 'strawberry'".
+    - An agent writes reasonable Python code to count the "r"'s, runs it, and sees that the answer is 3.
+
+Try it out...
+=============
 
 - Your docker container has *opencode* pre-installed.
 - opencode is a coding agent that works in the terminal.
