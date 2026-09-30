@@ -35,8 +35,6 @@ demo 3 1
 
 **<span class="term">Agents</span>**
 
----
-
 AI
 ==
 
