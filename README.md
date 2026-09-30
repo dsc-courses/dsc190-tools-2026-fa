@@ -33,5 +33,5 @@ collection of skills that AIs can use in the `.agents/skills/` directory.
 | Name        | Day/Time             |
 |-------------|----------------------|
 | Justin      | Thursdays, 12:30–2:00pm in HDSI 346 |
-| Brian (Tutor) | TBD |
+| Dylan (Tutor) | TBD |
 
