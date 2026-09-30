@@ -16,9 +16,10 @@ The Shell
 =========
 
 - Welcome back.
-- Open a terminal on your computer and clone the course repo:
+- Open a terminal on your computer (Windows: the Ubuntu app) and clone the course repo:
     - `git clone https://github.com/dsc-courses/dsc190-tools-2026-fa.git`
     - You will only need to do this once.
+    - Mac: if asked to install developer tools, say yes (it takes a few minutes).
 - Then, start the Linux environment:
     - `cd dsc190-tools-2026-fa`
     - `bash start-linux.sh`

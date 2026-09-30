@@ -10,8 +10,10 @@ class will work just like it does on macOS or Linux.
 
 ## Step 1: Install WSL
 
-*Note*: you may have already installed WSL when installing Docker. If so, you
-can skip this step.
+*Note*: to check whether you already have Ubuntu, open PowerShell and run
+`wsl -l -v`. If Ubuntu is listed, you can skip this step. Installing Docker
+sets up WSL but doesn't install Ubuntu, so a `docker-desktop` entry on its own
+doesn't count.
 
 Open PowerShell as an Administrator (right-click the Start menu, search for
 PowerShell, and choose "Windows PowerShell (Admin)"). Then run:

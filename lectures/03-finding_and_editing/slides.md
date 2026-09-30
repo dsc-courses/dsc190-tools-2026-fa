@@ -17,10 +17,10 @@ options:
 
 To follow along:
 
-1. Run `bash start-linux.sh`.
-2. `cd` into the course repository directory.
-3. Run `git pull`.
-4. Go to the first demo for Lecture 03:
+1. In your terminal (Windows: the Ubuntu app), run `cd dsc190-tools-2026-fa`
+   and then `bash start-linux.sh`.
+2. Inside the container, run `cd dsc190-tools-2026-fa` and then `git pull`.
+3. Go to the first demo for Lecture 03:
 
 ```bash
 demo 3 1
