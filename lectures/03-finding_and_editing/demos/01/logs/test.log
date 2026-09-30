@@ -1,0 +1,25 @@
+2025-02-10T09:00:00 [INFO] Starting test suite
+2025-02-10T09:00:01 [INFO] Loading test fixtures
+2025-02-10T09:00:02 [INFO] Running test_data_loading
+2025-02-10T09:00:03 [INFO] test_data_loading passed
+2025-02-10T09:00:04 [INFO] Running test_preprocessing
+2025-02-10T09:00:05 [WARNING] Deprecated function called in test_preprocessing
+2025-02-10T09:00:06 [INFO] test_preprocessing passed
+2025-02-10T09:00:07 [INFO] Running test_model_accuracy
+2025-02-10T09:00:08 [INFO] test_model_accuracy passed
+2025-02-10T09:00:09 [INFO] Running test_feature_extraction
+2025-02-10T09:00:10 [WARNING] Feature column "income" contains null values
+2025-02-10T09:00:11 [INFO] test_feature_extraction passed
+2025-02-10T09:00:12 [INFO] Running test_output_format
+2025-02-10T09:00:13 [INFO] test_output_format passed
+2025-02-10T09:00:14 [INFO] Running test_edge_cases
+2025-02-10T09:00:15 [WARNING] Input array nearly empty in test_edge_cases
+2025-02-10T09:00:16 [ERROR] test_edge_cases failed: expected 42, got 41
+2025-02-10T09:00:17 [INFO] Running test_csv_export
+2025-02-10T09:00:18 [INFO] test_csv_export passed
+2025-02-10T09:00:19 [INFO] Running test_database_connection
+2025-02-10T09:00:20 [WARNING] Slow query detected in test_database_connection
+2025-02-10T09:00:21 [INFO] test_database_connection passed
+2025-02-10T09:00:22 [INFO] Running test_normalization
+2025-02-10T09:00:23 [INFO] test_normalization passed
+2025-02-10T09:00:24 [INFO] Test suite complete: 8 passed, 1 failed

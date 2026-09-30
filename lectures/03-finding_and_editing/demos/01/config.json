@@ -1,0 +1,5 @@
+{
+    "regularization": 1.0,
+    "test_size": 0.3,
+    "seed": 42
+}

@@ -1,0 +1,12 @@
+Methods Summary
+===============
+
+We use logistic regression to predict participant outcomes from
+survey responses. Data was collected from 10 participants across
+the United States. Features are Likert-scale responses (1-5) to
+four survey questions.
+
+Model v1: C=1.0, seed=42
+Model v2: C=0.5, seed=123
+
+Both models were evaluated using a 70/30 train/test split.

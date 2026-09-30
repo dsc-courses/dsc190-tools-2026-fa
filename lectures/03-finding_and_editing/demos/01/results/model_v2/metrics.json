@@ -1,0 +1,6 @@
+{
+    "accuracy": 0.88,
+    "n_train": 7,
+    "test_size": 0.3,
+    "seed": 123
+}

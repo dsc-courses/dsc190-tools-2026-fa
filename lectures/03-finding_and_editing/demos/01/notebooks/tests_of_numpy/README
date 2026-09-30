@@ -1,0 +1,8 @@
+Tests of Numpy
+==============
+
+This directory contains notebooks that demonstrate how to
+use NumPy for various tasks, such as creating arrays,
+performing mathematical operations, and manipulating
+data.
+
