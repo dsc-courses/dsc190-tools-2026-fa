@@ -1,3 +1,8 @@
+# AI agents
+
+- What is an AI agent?
+    - **Answer**: An LLM that can call tools in a loop.
+
 # The `find` command
 
 - What does `find . -name '*.csv'` do?
