@@ -10,10 +10,10 @@ options:
 
 ![image:w:70%](../COMMON/logo.png)
 
-**<span class="term">Lecture 03 — Finding and Editing</span>**
+**<span class="term">Lecture 03 — find and grep</span>**
 
-Finding and Editing
-===================
+`find` and `grep`
+=================
 
 To follow along:
 
