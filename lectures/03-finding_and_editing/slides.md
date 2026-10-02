@@ -515,3 +515,52 @@ Regular Expressions
 # find lines that start with "TODO"
 grep '^TODO' <file>
 ```
+
+---
+
+<!-- new_lines: 4 -->
+<!-- alignment: center -->
+
+![image:w:70%](../COMMON/logo.png)
+
+**<span class="term">Find, Grep, and Agents</span>**
+
+
+Retrieval
+=========
+
+- A classic problem in data science is **retrieval**.
+- **Example**: given a collection of notes and a query ("When did I take my last math class?"), find the relevant documents.
+- Real world complication: the query may not contain the exact words that are in the relevant documents.
+    - e.g., "math class" vs. "calculus course"
+
+Approaches
+==========
+
+- `find` and `grep` with exact query are brittle.
+- Smarter approaches involve turning query into a vector and finding the closest vectors in the document collection.
+    - E.g., TF-IDF, BM25, etc.
+- Even more recently: RAG (retrieval-augmented generation)
+    - Use a retrieval (TF-IDF, BM25) system to find relevant documents, then feed those documents to an LLM to generate an answer.
+
+2026: `find` and `grep` are all you need
+========================================
+
+- Agents are *very* good at using `find` and `grep` to retrieve relevant information.
+- An agent can:
+    - *generate* many different `find` and `grep` commands with different queries and
+    - *synthesize* the results to answer your question.
+
+
+Example: "When did I take my last math class?"
+==============================================
+
+- Agent calls:
+    - `grep -rin 'math' .`
+    - `grep -rin 'calculus' .`
+    - `grep -rin 'algebra' .`
+    - `grep -rin 'calculus' .`
+    - `grep -rin 'course' .`
+    - `grep -rin 'class' .`
+    - ...
+- The results enter its *context*.
