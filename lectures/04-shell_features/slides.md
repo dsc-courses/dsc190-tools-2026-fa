@@ -11,7 +11,7 @@ Shell Features
 
 To follow along:
 
-1. In your terminal (Windows: the Ubuntu app), run `cd dsc190-tools-2026-fa`
+1. In your terminal, run `cd dsc190-tools-2026-fa`
    and then `bash start-linux.sh`.
 2. Inside the container, run `cd dsc190-tools-2026-fa` and then `git pull`.
 3. Go to the first demo for Lecture 04:
