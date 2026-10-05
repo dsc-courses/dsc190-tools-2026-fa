@@ -4,9 +4,9 @@
 
 ## Getting Started
 
-In your terminal (Windows: the Ubuntu app), run `cd dsc190-tools-2026-fa` and
-then `bash start-linux.sh`. Inside the container, run `cd dsc190-tools-2026-fa`
-and then `git pull`. Then `cd` into `assignments/02-shell/`.
+In your terminal, run `cd dsc190-tools-2026-fa` and then `bash start-linux.sh`.
+Inside the container, run `cd dsc190-tools-2026-fa` and then `git pull`. Then
+`cd` into `assignments/02-shell/`.
 
 Then, run `python setup.py`. This will generate the sample data for this
 assignment. If you ever want to get a fresh copy of the data, simply delete the
