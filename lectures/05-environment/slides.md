@@ -1,0 +1,306 @@
+---
+theme:
+  path: ../../.presenterm/theme.yaml
+  override:
+    footer:
+      style: template
+      right: "{current_slide} / {total_slides}"
+options:
+  list_item_newlines: 2
+---
+
+
+Environments
+============
+
+To follow along:
+
+1. In your terminal, run `cd dsc190-tools-2026-fa`
+   and then `bash start-linux.sh`.
+2. Inside the container, run `cd dsc190-tools-2026-fa` and then `git pull`.
+3. Go to the first demo for Lecture 05:
+
+```bash
+demo 5 1
+```
+
+---
+
+<!-- new_lines: 4 -->
+<!-- alignment: center -->
+
+![image:w:70%](../COMMON/logo.png)
+
+**<span class="term">Environment Variables</span>**
+
+Variables
+=========
+
+Last time, we saw how to set and use shell variables:
+
+```bash
+name="Justin"
+x=42
+
+# prints: Hello Justin, your number is 42
+echo "Hello $name, your number is $x."
+```
+
+Useful for *shell scripting*.
+
+Variable Scope
+==============
+
+- Shell variables are only available in the **current** shell.
+- They do **not** survive when you exit the shell.
+- They are **not** "inherited".
+
+```bash
+name="Justin"
+echo $name
+# starts a new shell, *within* the old shell
+bash
+echo $name
+# type <c-d> to exit the new shell
+echo $name
+```
+
+Environment Variables
+=====================
+
+- <span class="term">**Environment variables**</span> are special: they **are** inherited.
+- To define an environment variable, use the `export` command:
+
+```bash
+export name="Justin"
+echo $name
+bash
+echo $name
+```
+
+Convention
+==========
+
+- By convention, environment variable names should be in all caps.
+
+```bash
+export NAME="Justin"
+echo $NAME
+bash
+echo $NAME
+```
+
+Alternative: Inline Definition
+==============================
+
+- You can also define an environment variable inline when running a command:
+- It will be local to that command's process.
+
+```bash
+NAME=Justin bash
+echo $NAME
+# press <c-d> to exit the new shell
+# not defined
+echo $NAME
+```
+
+<span class="exercise">**Exercise**</span>
+===
+
+Exported variables are inherited by child processes.
+
+Are they also inherited by grandchild, great-grandchild, etc. processes? I.e.,
+are they inherited recursively?
+
+<!-- pause -->
+**Yes!**
+
+Environment Variables and Python
+================================
+
+- Any program run in a shell inherits its environment variables.
+- In Python, you can access them via the `os` module:
+
+```python
+# in your python script...
+import os
+print(os.environ['NAME'])
+```
+
+Permanent Environment Variables
+===============================
+
+- Variables do not survive when you exit the shell.
+- To make them permanent, you need to redefine them *every time* your shell starts.
+- In `bash`, do this by editing the shell's startup file: `~/.bash_profile` (or `~/.profile` if that doesn't exist.)
+
+```bash
+# ~/.profile
+...
+export NAME="Justin"
+```
+
+<span class="exercise">**Exercise**</span>
+===
+
+Add an environment variable to your `~/.profile` that contains your name.
+
+Then, exit your linux container and start it. Is `$NAME` still defined?
+
+---
+
+<!-- new_lines: 4 -->
+<!-- alignment: center -->
+
+![image:w:70%](../COMMON/logo.png)
+
+**<span class="term">The PATH</span>**
+
+Running Programs
+================
+
+- The shell's main job is to run programs.
+- On Unix/Linux, a program is just a file marked as "executable".
+- When you type a command, how does the shell know where to find it?
+
+```bash
+ls
+```
+
+The PATH
+========
+
+- The <span class="term">**$PATH**</span> environment variable contains a list of directories to search for programs.
+```bash
+echo $PATH
+
+# prints:
+# /usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+```
+
+Note, $PATH is a single string, with directories separated by colons (`:`).
+
+The PATH
+========
+
+- When you run a command, the shell looks through these directories to find an executable file with the same name.
+- The *first* one it finds is the one it runs.
+
+
+type
+====
+
+- The `type` command shows the program that is found by searching the $PATH.
+- `type -a` shows all matches in the $PATH.
+
+```bash
+type grep
+type python3
+type cd
+type ls
+type -a ls
+```
+
+Permanently Modifying the PATH
+==============================
+
+- You'll often want to add directories to your $PATH, e.g., to run programs you installed yourself.
+- To do so, edit `~/.profile`.
+- Example: add `~/bin` to the $PATH:
+
+```bash
+# ~/.profile
+...
+export PATH="~/bin:$PATH"
+```
+
+Order Matters!
+==============
+
+- The first entries in the $PATH are searched first.
+- To give a directory **high priority**, put it at the beginning:
+```bash
+export PATH="~/bin:$PATH"
+```
+- To give a directory **low priority**, put it at the end:
+```bash
+export PATH="$PATH:~/bin"
+```
+
+---
+
+
+<!-- new_lines: 4 -->
+<!-- alignment: center -->
+
+![image:w:70%](../COMMON/logo.png)
+
+**<span class="term">Python Environments</span>**
+
+Python Environments
+===================
+
+- Suppose we write a Python program that uses a package (like `numpy` or `pandas`).
+- Python packages are also just files (and directories).
+- How does Python find the package?
+
+```python
+import numpy
+import pandas
+```
+
+Python's Search Path
+====================
+
+- Python looks for packages in the directories listed in the `sys.path` variable.
+
+```python
+# in your python script...
+import sys
+print(sys.path)
+```
+
+<span class="exercise">**Exercise: demo 5 1**</span>
+===
+
+`print_path.py` prints the directories in `sys.path`. What are they?
+
+`sys.path`
+==========
+
+- The first entry: directory of the script being run.
+    - This is what enables importing "helper" files.
+- `/usr/lib/python3.11`: python standard library.
+- `/usr/lib/python3/dist-packages`: "system" packages
+
+Checking a Package's Location
+=============================
+
+- To check where a package is being imported from, look at its `__path__` attribute:
+
+```python
+import numpy
+print(numpy.__path__)
+```
+
+Modifying the Search Path
+=========================
+
+To modify the package search path, set the `sys.path` variable in your script:
+
+```python
+# in my_script.py
+import sys
+sys.path.append('/path/to/my/packages')
+```
+
+Alternative: PYTHONPATH
+=======================
+
+You can also set the `PYTHONPATH` environment variable:
+
+```bash
+# in the shell
+export PYTHONPATH="/path/to/my/packages:$PYTHONPATH"
+python3 my_script.py
+```
