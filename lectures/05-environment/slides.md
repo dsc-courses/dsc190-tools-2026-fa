@@ -304,3 +304,102 @@ You can also set the `PYTHONPATH` environment variable:
 export PYTHONPATH="/path/to/my/packages:$PYTHONPATH"
 python3 my_script.py
 ```
+
+---
+
+<!-- new_lines: 4 -->
+<!-- alignment: center -->
+
+![image:w:70%](../COMMON/logo.png)
+
+**<span class="term">Executables and Shebang Lines</span>**
+
+---
+
+Customizing Your Tools
+======================
+
+- Let's say you've written a Python script, `myscript.py`.
+- You can run it with `python myscript.py`.
+- But you want to be able to run it from anywhere (just like `ls`, `grep`, etc.) without typing `python` first.
+- Can do this by:
+    1. Adding a "shebang line" to the file.
+    2. Marking it as executable.
+    3. Adding its directory to the $PATH.
+
+Step 1: Add a Shebang Line
+==========================
+
+- If the first line of a file starts with `#!`, the shell treats it as a <span class="term">**shebang**</span>.
+- Immediately after `#!` should be the path to a *interpreter* (like Python, bash, etc.)
+- In our case, we want to use Python 3:
+
+```python
+#!/usr/bin/python3
+print("Hello, world!")
+```
+
+Step 1: Add a Shebang Line (Cont.)
+===================================
+
+- Instead of hardcoding the path to Python, we can use `env` to find it for us:
+
+```python
+#!/usr/bin/env python3
+print("Hello, world!")
+```
+
+Step 2: Mark as Executable
+==========================
+
+- Our file is currently just treated as text.
+- To mark it as executable, use the `chmod` command with `+x`:
+
+```bash
+chmod +x myscript.py
+```
+
+- Aside: `chmod` is also used to set file permissions (read, write, execute).
+
+
+Running the Script
+==================
+
+- Now we can run the script directly without typing `python`.
+- In the shell:
+
+```bash
+./myscript.py
+```
+
+- The `./` is necessary because the current directory is not in the $PATH.
+
+Renaming the Script
+===================
+
+- In fact, we can get rid of the `.py` extension, since the shebang line tells the shell how to run it:
+
+```bash
+mv myscript.py myscript
+./myscript
+```
+
+Step 3: Add to the PATH
+=======================
+
+- To make the script runnable from anywhere, add its directory to the $PATH.
+    - You might want to do this in `~/.bash_profile` so it is permanent.
+
+```bash
+export PATH="$(pwd):$PATH"
+cd somewhere/else
+myscript
+```
+
+Customizing Your Tools
+======================
+
+- This is an example of *customizing your tools*.
+- Idea:
+    - Have an annoying task you do often? (e.g., check the surf report)
+    - Have an agent write a script and add it to your $PATH.
