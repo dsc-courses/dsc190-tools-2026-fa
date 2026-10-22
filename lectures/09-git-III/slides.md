@@ -83,10 +83,12 @@ Reason 2: some files don't belong, practically
 Why?
 ====
 
-- Git stores a copy of very version of every file you commit.
+- Git stores a copy of every version of every file you commit.^1^
 - Text files are small, so this is usually not a problem.
 - Keeping many versions of image files, PDFs, large data sets, etc. quickly starts to take up *lots* of space.
 - Git operations (like `git status`) become very slow.
+
+^1^ Not technically true, but true enough for binary files.
 
 Corollary
 =========
@@ -190,7 +192,7 @@ A More Practical Workflow
 =========================
 
 - Git Flow is overkill for most data science projects.
-- Now: a simpler recommend workflow for solo projects.
+- Now: a simpler recommended workflow for solo projects.
 
 Rule #1: `main` should always be "clean"
 ========================================
@@ -216,6 +218,7 @@ Rule #3: commit early, commit often
 - Commits to the feature branches should be frequent.
 - Utilize "Work in Progress" (WIP) commits.
     - Should have low barrier to committing.
+        - Code doesn't have to run, etc.
     - Commit messages can be lazy, vague
     - Messages usually start with "WIP:"
 
@@ -310,7 +313,7 @@ Workflows for Team Projects
 GitHub
 ======
 
-- When working collaboratively, you will often use GitHub to host your repository.
+- When working collaboratively, you will often use **GitHub** to host your repository.
 - GitHub provides collaboration and communication features around a git repo.
 - The workflow recommended by GitHub is called **GitHub Flow**[^1].
 
@@ -338,14 +341,16 @@ Submitting a PR
 Demo
 ====
 
-Create a new pull request and merge it.
+Fix this tpyo with a pull request.
 
 
 Why?
 ====
 
 - Merging something into main is a big deal, especially if main is "live".
+    - e.g., a live website, a production ML model, etc.
 - A PR gives an opportunity for your colleagues/boss to review it first.
+- You'll get practice with pull requests and more GitHub features in Assignment 05.
 
 
 ---
