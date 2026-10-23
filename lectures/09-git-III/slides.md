@@ -341,7 +341,7 @@ Submitting a PR
 Demo
 ====
 
-Fix this tpyo with a pull request.
+Fix this typo with a pull request.
 
 
 Why?
