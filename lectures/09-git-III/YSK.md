@@ -31,5 +31,11 @@
 - After squash-merging a branch `feature` into `main`, what command deletes the `feature` branch?
     - **Answer**: `git branch -D feature`
 
+- In GitHub Flow, how is a feature branch merged into `main`?
+    - **Answer**: By opening a pull request on GitHub and merging it there.
+
+- After committing changes to a local feature branch, what must you do before opening a pull request?
+    - **Answer**: Push the branch to GitHub.
+
 - What Git feature lets several AI agents work on the same repository in parallel, each on its own branch in its own directory?
     - **Answer**: Worktrees (`git worktree`).
