@@ -19,6 +19,14 @@ To follow along, clone the course repo:
 git clone https://github.com/dsc-courses/dsc190-tools-2026-fa.git
 ```
 
+Extra Lecture: Modern Shell Tools
+=================================
+
+- I've posted an optional extra lecture on *modern* shell tools.
+    - fish, lsd, bat, fd, ripgrep, zoxide, fzf, starship
+- Watch it on YouTube: https://youtu.be/zsaZPo9up-o
+- Slides: `lectures/extra/01-modern_shell/` in the course repo.
+
 ---
 
 <!-- new_lines: 4 -->
