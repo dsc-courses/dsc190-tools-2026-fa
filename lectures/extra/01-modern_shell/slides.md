@@ -76,6 +76,7 @@ fish
     - Color!
     - More!
 - Only *somewhat* bash-compatible.
+- Bonus: *starship* prompt
 
 lsd
 ===
