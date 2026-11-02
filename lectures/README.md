@@ -13,3 +13,4 @@
 | 09 | Git in Practice | [PDF](https://dsc-courses.s3.us-west-000.backblazeb2.com/dsc190-tools-2026-fa/09-git-III.pdf) |
 | 10 | Python Project Tooling | [PDF](https://dsc-courses.s3.us-west-000.backblazeb2.com/dsc190-tools-2026-fa/10-python_projects.pdf) |
 | 11 | MyPy and Pytest | [PDF](https://dsc-courses.s3.us-west-000.backblazeb2.com/dsc190-tools-2026-fa/11-mypy_pytest.pdf) |
+| 12 | Wordle | [PDF](https://dsc-courses.s3.us-west-000.backblazeb2.com/dsc190-tools-2026-fa/12-wordle.pdf) |
