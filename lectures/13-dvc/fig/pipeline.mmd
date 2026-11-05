@@ -1,0 +1,31 @@
+%% Render with: mmdc -i pipeline.mmd -o pipeline.png -b white -s 3
+flowchart LR
+    raw[/"data/raw.csv"/]
+    cleaned[/"data/cleaned.csv"/]
+    transformed[/"data/transformed.csv"/]
+    features[/"data/features.csv"/]
+
+    clean_py["src/clean.py"]
+    transform_py["src/transform.py"]
+    extract_py["src/extract_features.py"]
+
+    clean(["<b>clean</b>"])
+    transform(["<b>transform</b>"])
+    extract(["<b>extract_features</b>"])
+
+    raw --> clean
+    clean_py -.-> clean
+    clean --> cleaned
+    cleaned --> transform
+    transform_py -.-> transform
+    transform --> transformed
+    transformed --> extract
+    extract_py -.-> extract
+    extract --> features
+
+    classDef stage fill:#dbeafe,stroke:#1d4ed8,stroke-width:2px,color:#000
+    classDef data fill:#fef3c7,stroke:#b45309,color:#000
+    classDef code fill:#f3f4f6,stroke:#6b7280,color:#000
+    class clean,transform,extract stage
+    class raw,cleaned,transformed,features data
+    class clean_py,transform_py,extract_py code

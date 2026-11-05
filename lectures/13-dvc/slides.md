@@ -45,6 +45,34 @@ More Accurately...
 - But this does not work well for binary files (e.g., image data sets, PyTorch
   model weights, etc.).
 
+Experiment: Large Files in Git
+==============================
+
+- Let's test this on some real data: the UTKFace dataset.
+- Download it with:
+
+```bash
+wget https://f000.backblazeb2.com/file/jeldridge-data/015-utkfaces/utkcropped.npz
+```
+
+The UTKFace Data
+================
+
+- 9,780 cropped face images, each 200 × 200 grayscale pixels (`uint8`, 0–255).
+- Stored as one NumPy array named `faces`, with shape `(9780, 40000)`.
+- 267 MB compressed (as downloaded), 391 MB uncompressed.
+
+![image:w:90%](fig/utkfaces.png)
+
+Experiment: Large Files in Git
+==============================
+
+- Copy `demos/01-modify-data` somewhere outside the course repo, `git init` it, and download `utkcropped.npz` into it.
+- `modify.py` changes 100 random pixels (out of 391 million) and saves the file:
+- Commit the data, then repeat several times: modify, commit.
+- After each commit, check how big the repository is.
+
+
 Today: DVC
 ==========
 
@@ -91,6 +119,15 @@ Adding a File
 =============
 
 - We've received the first version of our data: utkcropped.npz
+- Download it with:
+
+```bash
+wget https://f000.backblazeb2.com/file/jeldridge-data/015-utkfaces/utkcropped.npz
+```
+
+Tracking the File
+=================
+
 - To track it with dvc, run:
 
 ```bash
@@ -101,13 +138,12 @@ What happened?
 ==============
 
 - *dvc add* did two things:
-    - Created a file named `utkcropped.npz.dvc` that contains metadata about the file.
+    - Created a *placeholder* text file named `utkcropped.npz.dvc` that contains only metadata about the file.
     - Added `utkcropped.npz` to `.gitignore` so that git ignores it.
-- Commit both to git.
+- You should commit both the placeholder file and the .gitignore to git.
 
 utkcropped.npz.dvc
 ==================
-
 
 ```
 outs:
@@ -117,12 +153,21 @@ outs:
   path: utkcropped.npz
 ```
 
-DVC
-===
+Placeholders
+============
 
 - DVC replaces the actual file with a metadata text file.
 - The metadata is tracked with git.
-- The actual file is stored in a separate location.
+- The actual file is not tracked with git, and is stored in a separate location.
+
+Local vs. Remote
+================
+
+- The versions of your file are *still* stored in your local <span class="term">**cache**</span>.
+    - Located in `.dvc/cache/`.
+- This doesn't help us much:
+    - We want to share the data with others.
+    - We want to keep disk usage low.
 
 DVC Remotes
 ===========
@@ -205,7 +250,8 @@ Going Back in Time
 ==================
 
 - We can switch to a previous git commit with "git switch"
-- But the data file will not be changed.
+- The DVC placeholder `<filename>.dvc` will be updated.
+- But the data file itself will not be changed.
 - To download the correct version of the data, run:
 
 ```bash
@@ -286,8 +332,13 @@ dvc repro
 Demo
 ====
 
-- The `01-pipeline` demo contains sample data and code for cleaning, transforming, and feature extraction.
+- The `02-pipeline` demo contains sample data and code for cleaning, transforming, and feature extraction.
 - Define and run a pipeline with those three stages.
-- Try:
-    - Changing the code for one of the stages and re-running the pipeline.
-    - Cloning a fresh copy of the repo and pulling data.
+
+![image:w:100%](fig/pipeline.png)
+
+Demo: Things to Try
+===================
+
+- Changing the code for one of the stages and re-running the pipeline.
+- Cloning a fresh copy of the repo and pulling data.
