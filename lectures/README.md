@@ -17,3 +17,4 @@
 | 13 | Data Version Control | [PDF](https://dsc-courses.s3.us-west-000.backblazeb2.com/dsc190-tools-2026-fa/13-dvc.pdf) |
 | 14 | Notebooks | [PDF](https://dsc-courses.s3.us-west-000.backblazeb2.com/dsc190-tools-2026-fa/14-notebooks.pdf) |
 | 15 | Working Remotely | [PDF](https://dsc-courses.s3.us-west-000.backblazeb2.com/dsc190-tools-2026-fa/15-remote.pdf) |
+| 16 | Docker | [PDF](https://dsc-courses.s3.us-west-000.backblazeb2.com/dsc190-tools-2026-fa/16-docker.pdf) |
