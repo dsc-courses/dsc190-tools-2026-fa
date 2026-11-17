@@ -67,6 +67,42 @@ Docker Vocabulary
 
 ![image:w:70%](../COMMON/logo.png)
 
+**<span class="term">Example</span>**
+
+Excalidraw
+==========
+
+- *Excalidraw* is an open-source virtual whiteboard for sketching hand-drawn-style diagrams.
+- It's a web app: a JavaScript frontend served by a web server (Nginx).
+- Running it yourself would normally mean installing Node.js, building the app, and configuring a web server.
+- With Docker, someone has already done all of that and published an *image* to *Docker Hub*.
+
+Running Excalidraw
+==================
+
+- To download the image and start a container, run:
+```bash
+docker run --rm -p 8080:80 excalidraw/excalidraw
+```
+- Then visit `http://localhost:8080` in your browser.
+- `-p 8080:80` connects port 8080 on your machine to port 80 in the container, where the web server listens.
+- Press `Ctrl-C` to stop it.
+
+What Just Happened?
+===================
+
+- Docker downloaded the `excalidraw/excalidraw` image from Docker Hub.
+- It started a *container* from that image, which runs the web server.
+- We didn't install Node.js, Nginx, or anything else on our machine.
+- When we stop the container, it's gone (thanks to `--rm`); our machine is unchanged.
+
+---
+
+<!-- new_lines: 4 -->
+<!-- alignment: center -->
+
+![image:w:70%](../COMMON/logo.png)
+
 **<span class="term">Defining Docker Images</span>**
 
 Defining Docker Images
@@ -95,7 +131,7 @@ CMD ["/usr/games/cowsay", "Hello from Docker!"]
 A More Realistic Example
 ========================
 
-See: `demos/02-jupyter-pdf/Dockerfile`
+See: `demos/02-pdf/Dockerfile`
 
 ```docker
 FROM python:3.12-slim
@@ -111,6 +147,12 @@ RUN apt-get update && apt-get install -y \
 
 RUN pip install --no-cache-dir pdftotext pandas
 ```
+
+A Real-World Example
+====================
+
+- The linux container from the start of the quarter is defined in a Dockerfile.
+- See: `demos/03-course-image/Dockerfile`
 
 Common Directives
 =================

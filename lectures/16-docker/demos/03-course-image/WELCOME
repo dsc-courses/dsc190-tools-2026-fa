@@ -1,0 +1,8 @@
+Welcome to your linux environment!
+
+This is your Linux *docker container*. Think of it as a small, virtual linux
+computer that runs on your computer.
+
+Feel free to experiment with it! Whatever you do in this container will not
+affect your main computer (also known as the "host" computer). You can install
+software, create files, and run commands without worry.
