@@ -15,6 +15,13 @@ To follow along, clone the course repo:
 git clone https://github.com/dsc-courses/dsc190-tools-2026-fa.git
 ```
 
+No YSK
+======
+
+- Quiz 08 (the last quiz) stops at Lecture 16.
+- This lecture (and later) are not on any quiz.
+- But they are useful for the final project.
+
 ---
 
 <!-- new_lines: 4 -->
