@@ -1,0 +1,8 @@
+[project]
+name = "heart-disease"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "pandas>=3.0.3",
+    "scikit-learn>=1.8.0",
+]

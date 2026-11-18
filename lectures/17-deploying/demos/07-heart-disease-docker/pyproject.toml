@@ -1,0 +1,8 @@
+[project]
+name = "heart-disease-api"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi[standard]>=0.115.0",
+    "scikit-learn>=1.8.0",
+]
